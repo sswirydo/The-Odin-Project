@@ -1,3 +1,15 @@
 body {
-  background-color: rgb(253, 249, 233);
+  background-color: rgb(37, 47, 63);
+  color: rgb(239, 239, 239);
+}
+
+h1, h2, h3,
+h4, h5, h6 {
+  color: rgb(224, 125, 125)
+}
+
+a[href] {
+  text-decoration: none;
+  font-weight: 700;
+  color: rgb(223, 140, 45);
 }
