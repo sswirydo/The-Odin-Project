@@ -28,3 +28,32 @@ p, h1, h2, h3, h4, h5, h6 {
 #root, #__next {
   isolation: isolate;
 }
+
+.main-ct {
+  display: flex;
+}
+
+.left {
+  background-image: url(ressources/filip-zrnzevic-QsWG0kjPQRY-unsplash.jpg);
+  background-size: cover;
+  background-position: center;
+  width: 35%;
+  height: 100vh;
+}
+
+.logo-ct {
+  background-color: rgba(0, 0, 0, 0.50);
+  width: 100%;
+  margin-top: 25%;
+}
+
+.logo {
+  font-size: 45px;
+  color:aliceblue;
+  text-align: center;
+}
+
+.right {
+  width: auto;
+}
+
