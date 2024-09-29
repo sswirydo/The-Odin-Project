@@ -8,6 +8,28 @@
   <script src="script.js" defer></script>
 </head>
 <body>
-  
+  <div class="main">
+    <div class="books">
+      <div class="book-list">
+        <!-- List of books (cf. script.js) -->
+      </div>
+      <div class="form-box">
+        <form>
+          <input type="text" id="title" placeholder="title">
+          <input type="text" id="author" placeholder="author">
+          <input type="number" id="pages" placeholder="pages">
+          <div class="checkbox">
+            <input type="checkbox" id="read" placeholder="">
+            <label for="read">Did you finished reading?</label>
+          </div>
+          <button type="submit" class="btn-submit">submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer">
+      <h1>low-wifi book library</h1>
+      <button class="btn-add">add new book</button>
+    </div>
+  </div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 :root {
-  
+  text-transform: lowercase;
 }
 
 *, *::before, *::after {
@@ -35,4 +35,143 @@ p, h1, h2, h3, h4, h5, h6 {
 
 body {
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+body {
+  background-image: url(ressources/filip-zrnzevic-QsWG0kjPQRY-unsplash.jpg);
+  /* background-image: url(ressources/filip-zrnzevic-QsWG0kjPQRY-unsplash.jpg); */
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+.main {
+  color: beige;
+}
+
+.books {
+  display: grid;
+  grid-template-columns: 3fr auto;
+
+  overflow-y: scroll;
+  height: auto;
+  position: absolute;
+  bottom:0;
+  top:0;
+  left:0;
+  right:0;
+  min-height: 150px;
+  padding: 50px;
+  margin-top: 0%;
+  margin-bottom: 50px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+  gap: 20px;
+}
+
+.book-list {
+  font-size: large;
+  font-weight: 600;
+  list-style-type: none;
+}
+
+.book {
+  display: grid;
+  grid-template-columns: 15fr 0.5fr 2fr;
+  gap: 25px;
+  margin-bottom: 10px;
+}
+
+.book > div:first-child {
+  text-align: center;
+}
+
+.btn-del {
+  align-self: center;
+}
+
+.form-box {
+  min-width: 350px;
+}
+
+form {
+  align-self: start;
+  position: sticky; top: 0; z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  gap: 5px;
+}
+
+form input {
+  border-radius: 13px;
+  padding: 0px 10px;
+  background-color:beige;
+}
+
+form .checkbox {
+  padding: 0px 5px;
+  accent-color: beige;
+}
+
+input[type="checkbox"] {
+  accent-color: beige;
+}
+
+form .checkbox label {
+  font-weight: 600;
+}
+
+form > button {
+  margin-top: 20px;
+  border-radius: 13px;
+  background-color:beige;
+}
+
+form > button:active {
+  transform: scale(0.97);
+}
+
+.book-list, .form-box {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.45);
+  border-radius: 25px;
+}
+
+form {
+  padding: 20px;
+}
+
+.footer {
+  position: fixed; /* Make the footer sticky */
+  bottom: 0; /* Stick it to the bottom */
+  background-color: rgba(0, 0, 0, 0.75);
+  min-height: 50px;
+  display: grid; grid-template-columns: 5fr 1fr; row-gap: 10px;
+  width: 100%;
+}
+
+.footer h1 {
+  align-self: flex-end;
+}
+
+.btn-add, .btn-del {
+  background-color: beige;
+  border-radius: 20px;
+}
+
+.btn-add:active, .btn-del:active {
+  transform: scale(0.99);
+}
+
+.btn-del {
+  padding: 0px 30px;
+  font-weight: 0;
+}
+
+
+
+
+* {
+  /* outline: 1px solid red; */
 }
