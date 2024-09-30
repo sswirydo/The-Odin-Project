@@ -2,11 +2,13 @@
 import home from "./home";
 import menu from "./menu";
 import about from "./about";
-import './main.css';
+
+// import './main.css';
+import './post.css';
 
 
 const content = document.querySelector("#content");
-content.appendChild(menu());
+content.appendChild(home());
 
 /* Navigation bar listeners */
 const homeBtn = document.querySelector("#home");
