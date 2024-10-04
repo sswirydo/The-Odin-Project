@@ -23,7 +23,7 @@ const cards = [
   {name: 'Empress', id: 3},
   {name: 'Fool', id: 0},
   {name: 'Fortune', id: 10},
-  {name: 'Hanged Man', id: 12},
+  {name: 'Hanged', id: 12},
   {name: 'Hermit', id: 9},
   {name: 'Hierophant', id: 5},
   {name: 'Hunger', id: 111},
@@ -42,15 +42,43 @@ const cards = [
   {name: 'World', id: 21}
 ]
 
+
+class CardDeck {
+  constructor(cards) {
+    this.cards = cards;
+  }
+
+  shuffle() {
+    // https://stackoverflow.com/a/12646864
+    for (let i = this.cards.length - 1; i >= 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+    }
+  }
+
+  pop() {
+    return this.cards.pop();
+  }
+
+  insert(cardObj) {
+    this.cards.push(cardObj);
+  }
+
+  size() {
+    return this.cards.length;
+  }
+
+}
+
+
 function Card({ cardName }) {
 
   const cardPath = 'tarot/'
   const cardExt = '.webp'
 
-  let reveal = false; // reveal ? card : back
-  let played = false; // display on board
-  let picked = false; // choosen by the player
-
+  // let reveal = false; // reveal ? card : back
+  // let played = false; // display on board
+  // let picked = false; // choosen by the player
 
   return (
     <div className='card'>
@@ -60,18 +88,37 @@ function Card({ cardName }) {
   );
 }
 
+
 function App() {
 
   let victory = 0;
   let defeat = 0;
   let score = 0;
-  let difficulty = 6;
+  let difficulty = cards.length;// - cards.length;
+  let handSize = 6;
 
-  const playedCards = []
+  const pickedCards = [];
+
+
+  const tempCards = []
   for (let i = 0; i < difficulty; i++) {
-    playedCards.push(<Card key={cards[i].id} cardName={cards[i].name}/>)
+    tempCards.push(<Card key={cards[i].id} cardName={cards[i].name}/>)
   }
 
+  let deck = new CardDeck(tempCards);
+  deck.shuffle();
+  const playedCards = [];
+  
+  // todo: care about re-renders etc.
+  for (let i = 0; i < handSize; i++) {
+    playedCards.push(deck.pop());
+  }
+
+  if (pickedCards.length == difficulty) {
+    return (
+      <div>GG! YOU WIN!</div>
+    )
+  }
 
   return (
     <div className='main'>
@@ -84,13 +131,22 @@ function App() {
           WIN: {victory} - DEFEAT: {defeat}
         </div>
         <div className="difficulty">
-          DIFFICULTY: {difficulty}
+          DIFFICULTY: {handSize}/{difficulty}
+        </div>
+        <div>
+          DECK SIZE: {deck.size()}
         </div>
       </header>
 
       <div className='card-ct'>
         {playedCards}
       </div>
+
+      <footer>
+        <button>A</button>
+        <button>B</button>
+        <button>C</button>
+      </footer>
     </div>
   );
 }

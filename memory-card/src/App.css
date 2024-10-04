@@ -5,19 +5,28 @@
   text-align: center;
 }
 
+.main > * {
+  margin: 20px;
+}
+
 header {
   display: flex;
+  justify-content: center;
   gap: 1em;
 }
 
 .card-ct {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  /* overflow-x: scroll; */
+  overflow-y: hidden;
+  gap: 1em;
 }
 
 .card {
   /* padding: 2em; */
-  max-width:min-content;
+  max-width: min-content;
 }
 
 .card img:hover {
@@ -25,5 +34,11 @@ header {
 }
 
 .card h1 {
-  font-size: 2em;
+  font-size: 1.5em;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
 }
