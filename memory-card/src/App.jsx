@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
 
-// import { useState } from 'react'
+import Card from './Card.jsx'
+
+import { useState } from 'react'
+
 import './App.css'
 
 
@@ -13,139 +16,175 @@ import './App.css'
 
  * * * * * * * * * * * * * */
 
- 
-const cards = [
-  {name: 'Aeon', id: 200},
-  {name: 'Chariot', id: 7},
-  {name: 'Death', id: 13},
-  {name: 'Devil', id: 15},
-  {name: 'Emperor', id: 4},
-  {name: 'Empress', id: 3},
-  {name: 'Fool', id: 0},
-  {name: 'Fortune', id: 10},
-  {name: 'Hanged', id: 12},
-  {name: 'Hermit', id: 9},
-  {name: 'Hierophant', id: 5},
-  {name: 'Hunger', id: 111},
-  {name: 'Jester', id: 100},
-  {name: 'Judgement', id: 20},
-  {name: 'Justice', id: 8},
-  {name: 'Lovers', id: 6},
-  {name: 'Magician', id: 1},
-  {name: 'Moon', id: 18},
-  {name: 'Priestess', id: 2},
-  {name: 'Star', id: 17},
-  {name: 'Strength', id: 11},
-  {name: 'Sun', id: 19},
-  {name: 'Temperance', id: 14},
-  {name: 'Tower', id: 16},
-  {name: 'World', id: 21}
-]
+function App() {  
+
+  const CARDS = [
+    {name: 'Aeon', id: 200},
+    {name: 'Chariot', id: 7},
+    {name: 'Death', id: 13},
+    {name: 'Devil', id: 15},
+    {name: 'Emperor', id: 4},
+    {name: 'Empress', id: 3},
+    {name: 'Fool', id: 0},
+    {name: 'Fortune', id: 10},
+    {name: 'Hanged', id: 12},
+    {name: 'Hermit', id: 9},
+    {name: 'Hierophant', id: 5},
+    {name: 'Hunger', id: 111},
+    {name: 'Jester', id: 100},
+    {name: 'Judgement', id: 20},
+    {name: 'Justice', id: 8},
+    {name: 'Lovers', id: 6},
+    {name: 'Magician', id: 1},
+    {name: 'Moon', id: 18},
+    {name: 'Priestess', id: 2},
+    {name: 'Star', id: 17},
+    {name: 'Strength', id: 11},
+    {name: 'Sun', id: 19},
+    {name: 'Temperance', id: 14},
+    {name: 'Tower', id: 16},
+    {name: 'World', id: 21}
+  ]
 
 
-class CardDeck {
-  constructor(cards) {
-    this.cards = cards;
-  }
-
-  shuffle() {
-    // https://stackoverflow.com/a/12646864
-    for (let i = this.cards.length - 1; i >= 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+  class CardDeck {
+    constructor(cards) {
+      this.cards = cards;
+    }
+    pop() { return this.cards.pop(); }
+    insert(cardObj) { this.cards.push(cardObj); }
+    size() { return this.cards.length; }
+    shuffle() {
+      for (let i = this.cards.length - 1; i >= 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+      } // https://stackoverflow.com/a/12646864
     }
   }
 
-  pop() {
-    return this.cards.pop();
+  class GameLogic {
+
+    constructor() {
+      console.log("GameLogic: building game..")
+      this.playedCards = [];
+      this.pickedCards = [];
+      this.deck = null;
+      this.victory = 0;
+      this.defeat = 0;
+      this.score = 0;
+      this.difficulty = CARDS.length;
+      this.handSize = 6;
+
+      this.tempCardElems = [];
+      for (let i = 0; i < this.difficulty; i++) {
+        this.tempCardElems.push(CARDS[i]);
+      }
+
+      this.deck = new CardDeck(this.tempCardElems);
+      this.deck.shuffle();  
+      
+      this.playCards();
+    }
+
+    playCards() {
+      console.log("Playing cards..");
+      if (this.playedCards.length > 0) {
+        console.log("board is not empty! Skipping");
+        return
+      }
+      for (let i = 0; i < this.handSize; i++) {
+        this.playedCards.push(this.deck.pop());
+      }
+    }
+
+    getPlayedCards() {
+      return this.playedCards;
+    }
+    
+    getPickedCards() {
+      return this.pickedCards;
+    }
+
+    insertBack() {
+      this.playedCards.forEach(card => {
+        this.deck.insert(card)
+      }); 
+      this.playedCards = [];
+    }
+
+    // todo picked card may be in pickedCards (lose condition)
+    pickCard(cardObj) {
+      let pickedCard = null;
+      const idx = this.playedCards.indexOf(cardObj);
+      if (idx >= 0) {
+        pickedCard = this.playedCards.splice(idx, 1);
+      }
+      if (pickedCard == null) {
+        console.error(`GameLogic.pickedCard: ${idx} ${pickedCard}`);
+      }
+      else {
+        this.pickedCards.push(pickedCard);
+      }
+    }
+
   }
 
-  insert(cardObj) {
-    this.cards.push(cardObj);
+
+
+  const renderCards = (cardList) => {
+
+    if (cardList.length == 0) {
+      return <div>Waiting for cards...</div>
+    } else {
+      return cardList.map((card) => {
+        return (
+          <Card key={card.id}
+            id={card.id} 
+            name={card.name}
+            path={`tarot/${card.name}.webp`}
+            click={(e) => {
+              // todo
+              console.log("ok");
+              console.log(e.target);
+              console.log(gamelogic);
+              
+            }}
+          /> 
+        )
+      })
+    }
   }
 
-  size() {
-    return this.cards.length;
-  }
-
-}
-
-
-function Card({ cardName }) {
-
-  const cardPath = 'tarot/'
-  const cardExt = '.webp'
-
-  // let reveal = false; // reveal ? card : back
-  // let played = false; // display on board
-  // let picked = false; // choosen by the player
-
-  return (
-    <div className='card'>
-      <img src={`${cardPath}${cardName}${cardExt}`}/>
-      <h1>{`${cardName}`}</h1>
-    </div>
-  );
-}
-
-
-function App() {
-
-  let victory = 0;
-  let defeat = 0;
-  let score = 0;
-  let difficulty = cards.length;// - cards.length;
-  let handSize = 6;
-
-  const pickedCards = [];
-
-
-  const tempCards = []
-  for (let i = 0; i < difficulty; i++) {
-    tempCards.push(<Card key={cards[i].id} cardName={cards[i].name}/>)
-  }
-
-  let deck = new CardDeck(tempCards);
-  deck.shuffle();
-  const playedCards = [];
-  
-  // todo: care about re-renders etc.
-  for (let i = 0; i < handSize; i++) {
-    playedCards.push(deck.pop());
-  }
-
-  if (pickedCards.length == difficulty) {
-    return (
-      <div>GG! YOU WIN!</div>
-    )
-  }
+  const [gamelogic, setGamelogic] = useState(new GameLogic());
 
   return (
     <div className='main'>
       
       <header>
         <div className="score">
-          SCORE: {score}/{difficulty}
+          SCORE: {gamelogic.score}/{gamelogic.difficulty}
         </div>
         <div className="stats">
-          WIN: {victory} - DEFEAT: {defeat}
+          WIN: {gamelogic.victory} - DEFEAT: {gamelogic.defeat}
         </div>
         <div className="difficulty">
-          DIFFICULTY: {handSize}/{difficulty}
+          DIFFICULTY: {gamelogic.handSize}/{gamelogic.difficulty}
         </div>
         <div>
-          DECK SIZE: {deck.size()}
+          DECK SIZE: {gamelogic.deck.size()}
         </div>
       </header>
 
       <div className='card-ct'>
-        {playedCards}
+        {
+          renderCards(gamelogic.getPlayedCards())
+        }
       </div>
 
       <footer>
-        <button>A</button>
-        <button>B</button>
-        <button>C</button>
+        <button onClick={() => {setGamelogic(new GameLogic())}}>
+          New Game
+        </button>
       </footer>
     </div>
   );
