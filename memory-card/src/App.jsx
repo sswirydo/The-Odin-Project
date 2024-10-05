@@ -9,10 +9,7 @@ import './App.css'
 
 /* * * * * * * * * * * * * *
           TODO LIST
- - create deck object
- - deck shuffle
- - separate picked and deck
- - not picked reshuffled into deck
+- empty
 
  * * * * * * * * * * * * * */
 
@@ -62,18 +59,19 @@ function App() {
     }
   }
 
+
+
   class GameLogic {
 
     constructor() {
       console.log("GameLogic: building game..")
-      this.playedCards = [];
-      this.pickedCards = [];
+      this.playedCards = []; // currently displayed on board
+      this.pickedCards = []; // memory
       this.deck = null;
       this.victory = 0;
       this.defeat = 0;
       this.score = 0;
-      this.difficulty = CARDS.length;
-      this.handSize = 6;
+      this.difficulty = 8;
 
       this.tempCardElems = [];
       for (let i = 0; i < this.difficulty; i++) {
@@ -92,7 +90,8 @@ function App() {
         console.log("board is not empty! Skipping");
         return
       }
-      for (let i = 0; i < this.handSize; i++) {
+      this.deck.shuffle();
+      for (let i = 0; i < this.difficulty; i++) {
         this.playedCards.push(this.deck.pop());
       }
     }
@@ -106,29 +105,25 @@ function App() {
     }
 
     insertBack() {
+      console.log("InsertBack()");
       this.playedCards.forEach(card => {
         this.deck.insert(card)
       }); 
       this.playedCards = [];
     }
 
-    // todo picked card may be in pickedCards (lose condition)
     pickCard(cardObj) {
-      let pickedCard = null;
-      const idx = this.playedCards.indexOf(cardObj);
-      if (idx >= 0) {
-        pickedCard = this.playedCards.splice(idx, 1);
-      }
-      if (pickedCard == null) {
-        console.error(`GameLogic.pickedCard: ${idx} ${pickedCard}`);
-      }
+      console.log("pickCard(): " + cardObj.name);
+      const idx = this.pickedCards.indexOf(cardObj);
+      if (idx < 0) this.pickedCards.push(cardObj);
       else {
-        this.pickedCards.push(pickedCard);
+        alert("You lose!");
+        this.pickedCards = [];
       }
+      this.insertBack();
+      this.playCards();
     }
-
   }
-
 
 
   const renderCards = (cardList) => {
@@ -142,12 +137,9 @@ function App() {
             id={card.id} 
             name={card.name}
             path={`tarot/${card.name}.webp`}
-            click={(e) => {
-              // todo
-              console.log("ok");
-              console.log(e.target);
-              console.log(gamelogic);
-              
+            click={() => {
+              console.log("Picking card:"); console.log(card);
+              gamelogic.pickCard(card);
             }}
           /> 
         )
@@ -168,7 +160,7 @@ function App() {
           WIN: {gamelogic.victory} - DEFEAT: {gamelogic.defeat}
         </div>
         <div className="difficulty">
-          DIFFICULTY: {gamelogic.handSize}/{gamelogic.difficulty}
+          DIFFICULTY: {gamelogic.difficulty}
         </div>
         <div>
           DECK SIZE: {gamelogic.deck.size()}
