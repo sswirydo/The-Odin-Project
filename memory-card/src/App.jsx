@@ -15,31 +15,31 @@ import './App.css'
  * * * * * * * * * * * * * */
 
 const CARDS = [
-  {name: 'Aeon', id: 200},
-  {name: 'Chariot', id: 7},
-  {name: 'Death', id: 13},
-  {name: 'Devil', id: 15},
-  {name: 'Emperor', id: 4},
-  {name: 'Empress', id: 3},
   {name: 'Fool', id: 0},
-  {name: 'Fortune', id: 10},
-  {name: 'Hanged', id: 12},
-  {name: 'Hermit', id: 9},
-  {name: 'Hierophant', id: 5},
-  {name: 'Hunger', id: 111},
-  {name: 'Jester', id: 100},
-  {name: 'Judgement', id: 20},
-  {name: 'Justice', id: 8},
-  {name: 'Lovers', id: 6},
   {name: 'Magician', id: 1},
-  {name: 'Moon', id: 18},
   {name: 'Priestess', id: 2},
-  {name: 'Star', id: 17},
+  {name: 'Empress', id: 3},
+  {name: 'Emperor', id: 4},
+  {name: 'Hierophant', id: 5},
+  {name: 'Lovers', id: 6},
+  {name: 'Chariot', id: 7},
+  {name: 'Justice', id: 8},
+  {name: 'Hermit', id: 9},
+  {name: 'Fortune', id: 10},
   {name: 'Strength', id: 11},
-  {name: 'Sun', id: 19},
+  {name: 'Hanged', id: 12},
+  {name: 'Death', id: 13},
   {name: 'Temperance', id: 14},
+  {name: 'Devil', id: 15},
   {name: 'Tower', id: 16},
-  {name: 'World', id: 21}
+  {name: 'Star', id: 17},
+  {name: 'Moon', id: 18},
+  {name: 'Sun', id: 19},
+  {name: 'Judgement', id: 20},
+  {name: 'World', id: 21},
+  {name: 'Jester', id: 100},
+  {name: 'Hunger', id: 111},
+  {name: 'Aeon', id: 200},
 ]
 
 class CardDeck {
@@ -92,7 +92,7 @@ function App() {
     playedCards.forEach(card => {
       deck.insert(card)
     }); 
-    setPlayedCards([]);
+    playedCards = [];
   }
 
   function pickCard(cardObj) {
@@ -112,7 +112,7 @@ function App() {
     playCards();
   }
 
-  console.log(shouldInit);
+  // FIXME: problematic if 2x renders at start
   if (shouldInit) {
     shouldInit = false;
     let tempCardElems = [];
