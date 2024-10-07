@@ -5,10 +5,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import Home from './pages/Home.jsx'
 import Shop from './pages/Shop.jsx'
-import Cart from './pages/Cart.jsx'
+import Checkout from './pages/Checkout.jsx'
 
 import './index.css'
-import './App.css'
 
 /** PLAN
  * - shopping cart:
@@ -39,7 +38,7 @@ const router = createBrowserRouter([
   },
   {
     path: "checkout",
-    element: <Cart />
+    element: <Checkout />
   },
 ])
 
