@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Message Board</title>
+</head>
+<body>
+  <h1>Messages</h1>
+  <a href="/new">add new message</a>
+  <% for (let i = locals.messages.length - 1; i >= 0; i--) { %>
+  <ul>
+    <li>
+      Date="<%= locals.messages[i].added %>"
+      <ul>
+        <li>
+          User="<%= locals.messages[i].user %>"
+        </li>
+        <li>
+          Message="<%= locals.messages[i].text %>"
+        </li>
+      </ul>
+    </li>
+  </ul>  
+  <% } %>
+</body>
+</html>
