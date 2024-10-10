@@ -4,6 +4,8 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
+app.use(express.static('public'));
+
 // easier form input access
 app.use(express.urlencoded({extended: true}));
 
